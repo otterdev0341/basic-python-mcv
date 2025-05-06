@@ -8,10 +8,12 @@ requires-python = ">=3.12"
 dependencies = [
     "aiomysql>=0.2.0",
     "asyncio>=3.4.3",
+    "install",
     "mcp[cli]>=1.7.1",
     "mypy>=1.15.0",
+    "pip",
     "python-dotenv>=1.1.0",
-    "tortoise>=0.1.1",
+    "tortoise-orm[aiomysql]",
 ]
 
 [tool.mypy-my_package.self-bank]  # Replace with your actual module/package
@@ -23,4 +25,4 @@ strict = true
 warn_unused_configs = true
 show_error_codes = true
 pretty = true
-plugins = []
+plugins = ["returns.contrib.mypy.returns_plugin"]

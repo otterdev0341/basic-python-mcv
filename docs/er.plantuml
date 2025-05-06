@@ -1,0 +1,78 @@
+@startuml "self-bank"
+
+entity AssetType {
+  *id : INT <<PK>>
+  *name : VARCHAR
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity Asset {
+  *id : INT <<PK>>
+  *name : VARCHAR
+  *asset_type_id : INT <<FK>>
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity ExpenseType {
+  *id : INT <<PK>>
+  *name : VARCHAR
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity Expense {
+  *id : INT <<PK>>
+  *description : VARCHAR
+  *expense_type_id : INT <<FK>>
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity CustomerType {
+  *id : INT <<PK>>
+  *name : VARCHAR -- 'Customer' or 'Vendor'
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity Contact {
+  *id : INT <<PK>>
+  *name : VARCHAR
+  *business_name : VARCHAR
+  *phone : VARCHAR
+  *description : TEXT
+  *customer_type_id : INT <<FK>>
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity Transaction {
+  *id : INT <<PK>>
+  *transaction_type : ENUM("Income", "Payment")
+  *amount : DECIMAL(10,2)
+  *asset_id : INT <<FK>>
+  *expense_id : INT <<FK NULLABLE>>
+  *contact_id : INT <<FK NULLABLE>>
+  *note : VARCHAR
+  *created_at : DATETIME
+  *updated_at : DATETIME
+}
+
+entity CurrentSheet {
+  *id : INT <<PK>>
+  *asset_id : INT <<FK>>
+  *balance : DECIMAL(10,2)
+  *updated_at : DATETIME
+}
+
+AssetType ||--o{ Asset : asset_type_id
+ExpenseType ||--o{ Expense : expense_type_id
+CustomerType ||--o{ Contact : customer_type_id
+Contact ||--o{ Transaction : contact_id
+Asset ||--o{ Transaction : asset_id
+Expense ||--o{ Transaction : expense_id
+Asset ||--o{ CurrentSheet : asset_id
+
+@enduml
