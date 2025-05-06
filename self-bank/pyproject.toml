@@ -1,0 +1,26 @@
+[project]
+name = "self-bank"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "aiomysql>=0.2.0",
+    "asyncio>=3.4.3",
+    "mcp[cli]>=1.7.1",
+    "mypy>=1.15.0",
+    "python-dotenv>=1.1.0",
+    "tortoise>=0.1.1",
+]
+
+[tool.mypy-my_package.self-bank]  # Replace with your actual module/package
+ignore_missing_imports = false
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_configs = true
+show_error_codes = true
+pretty = true
+plugins = []
