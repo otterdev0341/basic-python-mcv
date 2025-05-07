@@ -7,5 +7,5 @@ class TransferUseCase:
     def __init__(self, repo: TranferRepositoryProtocol) -> None:
         self._repo = repo
 
-    async def execute(self, dto: TransferFundDto) -> Result[bool, Exception]:
+    async def tranfer_assest(self, dto: TransferFundDto) -> Result[bool, Exception]:
         return await self._repo.transfer_fund(dto)
