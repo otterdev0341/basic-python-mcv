@@ -81,7 +81,7 @@ class Transaction(Base, TimestampMixin):
     asset = relationship('Asset', back_populates='transactions')
     expense = relationship('Expense', back_populates='transactions')
     contact = relationship('Contact', back_populates='transactions')
-
+# done
 class CurrentSheet(Base):
     __tablename__ = 'current_sheets'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)

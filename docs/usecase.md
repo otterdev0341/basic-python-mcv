@@ -26,14 +26,14 @@
 
 ## 💰 Transaction Management
 
-| Function                                  | Description                                                           |
-|-------------------------------------------|-----------------------------------------------------------------------|
-| `recordIncome(amount, assetId, contactId, date)`   | Record income to a selected asset, optionally from a customer.       |
-| `recordPayment(amount, assetId, expenseId, contactId, date)` | Record a payment for an expense, optionally to a vendor.        |
-| `getTransactions()`                       | Fetch all transactions (income + payments).                          |
-| `getIncomeTransactions()`                 | Fetch only income transactions.                                      |
-| `getPaymentTransactions()`                | Fetch only payment transactions.                                     |
-| `getTransactionsByMonth(month)`           | Get all transactions in a given month.                               |
+| Function                                             | Description                                                           |
+|------------------------------------------------------|-----------------------------------------------------------------------|
+| `recordIncome(amount, assetId, contactId, date)`     | Record income to a selected asset, optionally from a contact.         |
+| `recordPayment(amount, assetId, expenseId, contactId, date)` | Record a payment for an expense, optionally to a contact.       |
+| `getTransactions()`                                  | Fetch all transactions (income + payments).                          |
+| `getIncomeTransactions()`                            | Fetch only income transactions.                                      |
+| `getPaymentTransactions()`                           | Fetch only payment transactions.                                     |
+| `getTransactionsByMonth(month)`                      | Get all transactions in a given month.                               |
 
 ---
 
