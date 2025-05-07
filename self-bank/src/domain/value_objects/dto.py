@@ -171,3 +171,10 @@ class ResCurrentSheetDto(BaseModel):
 
     class Config:
         orm_mode = True
+
+# === TRANSACTION DTOs ===
+class TransferFundDto(BaseModel):
+    source_asset_id: int
+    destination_asset_id: int
+    amount: Decimal  # <- This line helps the type checker
+    note: Optional[str] = None

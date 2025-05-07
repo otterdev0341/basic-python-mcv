@@ -50,9 +50,10 @@ entity Contact {
 
 entity Transaction {
   *id : INT <<PK>>
-  *transaction_type : ENUM("Income", "Payment")
+  *transaction_type : ENUM("Income", "Payment", "Transfer")
   *amount : DECIMAL(10,2)
-  *asset_id : INT <<FK>>
+  *asset_id : INT <<FK>> -- source
+  *destination_asset_id : INT <<FK NULLABLE>> -- destination for transfers
   *expense_id : INT <<FK NULLABLE>>
   *contact_id : INT <<FK NULLABLE>>
   *note : VARCHAR
@@ -72,6 +73,7 @@ ExpenseType ||--o{ Expense : expense_type_id
 CustomerType ||--o{ Contact : customer_type_id
 Contact ||--o{ Transaction : contact_id
 Asset ||--o{ Transaction : asset_id
+Asset ||--o{ Transaction : destination_asset_id
 Expense ||--o{ Transaction : expense_id
 Asset ||--o{ CurrentSheet : asset_id
 
