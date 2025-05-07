@@ -18,6 +18,9 @@ async def main():
     db_config = DbConfig()
     db = MysqlConnection(db_config)
 
+    # Migrate all Schema
+    await db.create_tables()
+
     # Create and register repository and use case
     contact_repo = ContactRepository(db)
     contact_usecase = ContactUseCase(contact_repo)
@@ -25,7 +28,7 @@ async def main():
     container.register("contact_usecase", contact_usecase)
 
     # Create MCP server
-    mcp = MCPServer(name="Demo", _container=container)
+    mcp = MCPServer(name="self-money-habbit", _container=container)
 
     # Register resources
     register_contact_resources(mcp, contact_usecase)
