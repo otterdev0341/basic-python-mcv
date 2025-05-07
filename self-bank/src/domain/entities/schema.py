@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum, Nume
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 import enum
 
 Base = declarative_base()
@@ -15,12 +16,14 @@ class TimestampMixin:
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
+# done repo
 class AssetType(Base, TimestampMixin):
     __tablename__ = 'asset_types'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     name = Column(String, index=True)
     assets = relationship('Asset', back_populates='asset_type')
 
+#done repo
 class Asset(Base, TimestampMixin):
     __tablename__ = 'assets'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
@@ -30,12 +33,14 @@ class Asset(Base, TimestampMixin):
     transactions = relationship('Transaction', back_populates='asset')
     current_sheets = relationship('CurrentSheet', back_populates='asset')
 
+# done repo
 class ExpenseType(Base, TimestampMixin):
     __tablename__ = 'expense_types'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     name = Column(String, index=True)
     expenses = relationship('Expense', back_populates='expense_type')
 
+# done repo
 class Expense(Base, TimestampMixin):
     __tablename__ = 'expenses'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
@@ -44,12 +49,14 @@ class Expense(Base, TimestampMixin):
     expense_type = relationship('ExpenseType', back_populates='expenses')
     transactions = relationship('Transaction', back_populates='expense')
 
-class CustomerType(Base, TimestampMixin):
-    __tablename__ = 'customer_types'
+# done repo
+class ContactType(Base, TimestampMixin):
+    __tablename__ = 'contact_types'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     name = Column(String, index=True)
-    contacts = relationship('Contact', back_populates='customer_type')
+    contacts = relationship('Contact', back_populates='contact_type')
 
+# done repo
 class Contact(Base, TimestampMixin):
     __tablename__ = 'contacts'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
@@ -57,10 +64,11 @@ class Contact(Base, TimestampMixin):
     business_name = Column(String, index=True)
     phone = Column(String, index=True)
     description = Column(String)
-    customer_type_id = Column(Integer, ForeignKey('customer_types.id'))
-    customer_type = relationship('CustomerType', back_populates='contacts')
+    contact_type_id = Column(Integer, ForeignKey('contact_types.id'))  # Updated FK
+    contact_type = relationship('ContactType', back_populates='contacts')  # Updated relationship
     transactions = relationship('Transaction', back_populates='contact')
 
+# done
 class Transaction(Base, TimestampMixin):
     __tablename__ = 'transactions'
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
@@ -81,3 +89,5 @@ class CurrentSheet(Base):
     balance = Column(Numeric(10, 2))
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
     asset = relationship('Asset', back_populates='current_sheets')
+
+    

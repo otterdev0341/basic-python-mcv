@@ -80,14 +80,14 @@ class ResExpenseDto(BaseModel):
     class Config:
         orm_mode = True
 
-# === CUSTOMER TYPE DTOs ===
-class CreateCustomerTypeDto(BaseModel):
+# === CONTACT TYPE DTOs ===
+class CreateContactTypeDto(BaseModel):
     name: str
 
-class UpdateCustomerTypeDto(BaseModel):
+class UpdateContactTypeDto(BaseModel):
     name: Optional[str] = None
 
-class ResCustomerTypeDto(BaseModel):
+class ResContactTypeDto(BaseModel):
     id: int
     name: str
     created_at: Optional[datetime]
@@ -102,14 +102,14 @@ class CreateContactDto(BaseModel):
     business_name: str
     phone: str
     description: Optional[str] = None
-    customer_type_id: int
+    contact_type_id: int
 
 class UpdateContactDto(BaseModel):
     name: Optional[str] = None
     business_name: Optional[str] = None
     phone: Optional[str] = None
     description: Optional[str] = None
-    customer_type_id: Optional[int] = None
+    contact_type_id: Optional[int] = None
 
 class ResContactDto(BaseModel):
     id: int
@@ -117,7 +117,7 @@ class ResContactDto(BaseModel):
     business_name: str
     phone: str
     description: Optional[str]
-    customer_type_id: int
+    contact_type_id: int
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
 
