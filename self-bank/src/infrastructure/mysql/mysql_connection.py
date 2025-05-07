@@ -1,36 +1,28 @@
-import os
 from dataclasses import dataclass, field
 from sqlalchemy.ext.asyncio import (
     AsyncSession, create_async_engine, async_sessionmaker, AsyncEngine
 )
 from sqlalchemy.engine import URL
-from dotenv import load_dotenv  # Optional but recommended
-
-# Load from .env file if present
-load_dotenv()
-
-
+from src.config.db_config import DbConfig
 @dataclass
 class MysqlConnection:
-    user: str = field(default_factory=lambda: os.environ["MYSQL_USER"])
-    password: str = field(default_factory=lambda: os.environ["MYSQL_PASSWORD"])
-    host: str = field(default_factory=lambda: os.environ.get("MYSQL_HOST", "localhost"))
-    port: int = field(default_factory=lambda: int(os.environ.get("MYSQL_PORT", 3306)))
-    database: str = field(default_factory=lambda: os.environ["MYSQL_DATABASE_NAME"])
+    config: DbConfig
 
     engine: AsyncEngine = field(init=False)
     session_maker: async_sessionmaker[AsyncSession] = field(init=False)
 
     def __post_init__(self):
+        # Create the URL for the SQLAlchemy engine
         url = URL.create(
             drivername="mysql+aiomysql",
-            username=self.user,
-            password=self.password,
-            host=self.host,
-            port=self.port,
-            database=self.database
+            username=self.config.user,
+            password=self.config.password,
+            host=self.config.host,
+            port=self.config.port,
+            database=self.config.database
         )
 
+        # Create the async engine
         self.engine = create_async_engine(url, echo=True, future=True)
         self.session_maker = async_sessionmaker(
             bind=self.engine,
