@@ -38,8 +38,8 @@ TransferFundDto:
 """
 
 def register_transfer_resources(mcp: MCPServer, usecase: TransferUseCase):
-    @mcp.resource("transfer://fund")
-    async def transfer_fund(dto: TransferFundDto) -> Result[bool, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transfer/fund")
+    async def transfer_fund(dto: TransferFundDto) -> Result[bool, Exception]:
         """
         Transfer funds between assets.
         

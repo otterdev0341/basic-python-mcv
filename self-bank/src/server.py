@@ -21,8 +21,8 @@ class MCPServer:
         self._mcp = FastMCP(self.name)
 
     def resource(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        method, route_path = self._translate_path_and_method(path)
-        return self._mcp.resource(route_path, method=method)
+        route_path = self._translate_path(path)
+        return self._mcp.resource(route_path)
 
     def tool(self) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         return self._mcp.tool()
@@ -30,10 +30,10 @@ class MCPServer:
     def start(self) -> None:
         self._mcp.start()
 
-    def _translate_path_and_method(self, uri: str) -> tuple[str, str]:
+    def _translate_path(self, uri: str) -> str:
         """
         Converts custom URI schemes like 'contact://create' to
-        ('POST', '/contact/create') or 'GET', 'DELETE', etc.
+        FastAPI-compatible paths like '/contact/create'
         """
         # Extract scheme and path
         match = re.match(r"^(\w+)://(.+)$", uri)
@@ -43,18 +43,6 @@ class MCPServer:
         scheme, raw_path = match.groups()
         parts = raw_path.strip("/").split("/")
 
-        # Determine method
-        if parts[-1] == "create":
-            method = "POST"
-        elif parts[-1] == "delete":
-            method = "DELETE"
-        elif parts[-1] == "update":  # Detect update operation
-            method = "PUT"  # Use PUT for update
-        elif any("{" in part for part in parts):
-            method = "GET"
-        else:
-            method = "GET"
-
         # Translate to FastAPI-compatible path
         route_path = f"/{scheme}/{'/'.join(parts)}"
-        return method, route_path
+        return route_path

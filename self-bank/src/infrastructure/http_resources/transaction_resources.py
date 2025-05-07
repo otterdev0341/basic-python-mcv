@@ -57,8 +57,8 @@ ResTransactionDto:
 """
 
 def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
-    @mcp.resource("transaction://income")
-    async def record_income(dto: CreateTransactionDto) -> Result[ResTransactionDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/income")
+    async def record_income(dto: CreateTransactionDto) -> Result[ResTransactionDto, Exception]:
         """
         Record an income transaction.
         
@@ -76,8 +76,8 @@ def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
         """
         return await usecase.record_income(dto)
 
-    @mcp.resource("transaction://payment")
-    async def record_payment(dto: CreateTransactionDto) -> Result[ResTransactionDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/payment")
+    async def record_payment(dto: CreateTransactionDto) -> Result[ResTransactionDto, Exception]:
         """
         Record a payment transaction.
         
@@ -95,8 +95,8 @@ def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
         """
         return await usecase.record_payment(dto)
 
-    @mcp.resource("transaction://list")
-    async def list_all() -> List[ResTransactionDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/list")
+    async def list_all() -> List[ResTransactionDto]:
         """
         List all transactions.
         
@@ -111,8 +111,8 @@ def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
         """
         return await usecase.list_transactions()
 
-    @mcp.resource("transaction://income/list")
-    async def list_income() -> List[ResTransactionDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/income/list")
+    async def list_income() -> List[ResTransactionDto]:
         """
         List income transactions.
         
@@ -127,8 +127,8 @@ def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
         """
         return await usecase.get_income_transactions()
 
-    @mcp.resource("transaction://payment/list")
-    async def list_payments() -> List[ResTransactionDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/payment/list")
+    async def list_payments() -> List[ResTransactionDto]:
         """
         List payment transactions.
         
@@ -143,8 +143,8 @@ def register_transaction_resources(mcp: MCPServer, usecase: TransactionUseCase):
         """
         return await usecase.get_payment_transactions()
 
-    @mcp.resource("transaction://month/{month}")
-    async def get_by_month(month: str) -> List[ResTransactionDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://transaction/month/{month}")
+    async def get_by_month(month: str) -> List[ResTransactionDto]:
         """
         Get transactions by month.
         

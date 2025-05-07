@@ -55,8 +55,8 @@ ResAssetDto:
 """
 
 def register_asset_resources(mcp: MCPServer, usecase: AssetUseCase):
-    @mcp.resource("asset://create")
-    async def create(dto: CreateAssetDto) -> Result[ResAssetDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://asset/create")
+    async def create(dto: CreateAssetDto) -> Result[ResAssetDto, Exception]:
         """
         Create a new asset.
         
@@ -76,8 +76,8 @@ def register_asset_resources(mcp: MCPServer, usecase: AssetUseCase):
         """
         return await usecase.create_asset(dto)
 
-    @mcp.resource("asset://{id}")
-    async def get(id: int) -> Optional[ResAssetDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://asset/get/{id}")
+    async def get(id: int) -> Optional[ResAssetDto]:
         """
         Get asset by ID.
         
@@ -95,8 +95,8 @@ def register_asset_resources(mcp: MCPServer, usecase: AssetUseCase):
         """
         return await usecase.get_asset(id)
 
-    @mcp.resource("asset://list")
-    async def list_all() -> List[ResAssetDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://asset/list")
+    async def list_all() -> List[ResAssetDto]:
         """
         List all assets.
         
@@ -111,8 +111,8 @@ def register_asset_resources(mcp: MCPServer, usecase: AssetUseCase):
         """
         return await usecase.get_all_assets()
 
-    @mcp.resource("asset://{id}/delete")
-    async def delete(id: int) -> Result[bool, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://asset/delete/{id}")
+    async def delete(id: int) -> Result[bool, Exception]:
         """
         Delete an asset.
         
@@ -130,8 +130,8 @@ def register_asset_resources(mcp: MCPServer, usecase: AssetUseCase):
         """
         return await usecase.delete_asset(id)
 
-    @mcp.resource("asset://{id}")
-    async def update(id: int, dto: UpdateAssetDto) -> Result[ResAssetDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://asset/update/{id}")
+    async def update(id: int, dto: UpdateAssetDto) -> Result[ResAssetDto, Exception]:
         """
         Update an asset.
         

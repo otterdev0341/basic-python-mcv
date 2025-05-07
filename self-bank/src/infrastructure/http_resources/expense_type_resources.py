@@ -52,8 +52,8 @@ ResExpenseTypeDto:
 """
 
 def register_expense_type_resources(mcp: MCPServer, usecase: ExpenseTypeUseCase):
-    @mcp.resource("expense-type://create")
-    async def create(dto: CreateExpenseTypeDto) -> Result[ResExpenseTypeDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://expense-type/create")
+    async def create(dto: CreateExpenseTypeDto) -> Result[ResExpenseTypeDto, Exception]:
         """
         Create a new expense type.
         
@@ -73,8 +73,8 @@ def register_expense_type_resources(mcp: MCPServer, usecase: ExpenseTypeUseCase)
         """
         return await usecase.create_expense_type(dto)
 
-    @mcp.resource("expense-type://{id}")
-    async def get(id: int) -> Optional[ResExpenseTypeDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://expense-type/get/{id}")
+    async def get(id: int) -> Optional[ResExpenseTypeDto]:
         """
         Get expense type by ID.
         
@@ -92,8 +92,8 @@ def register_expense_type_resources(mcp: MCPServer, usecase: ExpenseTypeUseCase)
         """
         return await usecase.get_expense_type(id)
 
-    @mcp.resource("expense-type://list")
-    async def list_all() -> List[ResExpenseTypeDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://expense-type/list")
+    async def list_all() -> List[ResExpenseTypeDto]:
         """
         List all expense types.
         
@@ -108,8 +108,8 @@ def register_expense_type_resources(mcp: MCPServer, usecase: ExpenseTypeUseCase)
         """
         return await usecase.list_expense_types()
 
-    @mcp.resource("expense-type://{id}/delete")
-    async def delete(id: int) -> Result[bool, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://expense-type/delete/{id}")
+    async def delete(id: int) -> Result[bool, Exception]:
         """
         Delete an expense type.
         
@@ -127,8 +127,8 @@ def register_expense_type_resources(mcp: MCPServer, usecase: ExpenseTypeUseCase)
         """
         return await usecase.delete_expense_type(id)
 
-    @mcp.resource("expense-type://{id}")
-    async def update(id: int, dto: UpdateExpenseTypeDto) -> Result[ResExpenseTypeDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("http://expense-type/update/{id}")
+    async def update(id: int, dto: UpdateExpenseTypeDto) -> Result[ResExpenseTypeDto, Exception]:
         """
         Update an expense type.
         

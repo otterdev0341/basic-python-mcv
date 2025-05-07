@@ -65,7 +65,7 @@ ResContactDto:
 
 def register_contact_resources(mcp: MCPServer, usecase: ContactUseCase):
     @mcp.resource("contact://create")
-    async def create(dto: CreateContactDto) -> Result[ResContactDto, Exception]:  # type: ignore[reportUnusedFunction]
+    async def create(dto: CreateContactDto) -> Result[ResContactDto, Exception]:
         """
         Create a new contact.
         
@@ -85,8 +85,8 @@ def register_contact_resources(mcp: MCPServer, usecase: ContactUseCase):
         """
         return await usecase.create_contact(dto)
 
-    @mcp.resource("contact://{id}")
-    async def get(id: int) -> Optional[ResContactDto]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("contact://get/{id}")
+    async def get(id: int) -> Optional[ResContactDto]:
         """
         Get contact by ID.
         
@@ -105,7 +105,7 @@ def register_contact_resources(mcp: MCPServer, usecase: ContactUseCase):
         return await usecase.get_contact(id)
 
     @mcp.resource("contact://list")
-    async def list_all() -> List[ResContactDto]:  # type: ignore[reportUnusedFunction]
+    async def list_all() -> List[ResContactDto]:
         """
         List all contacts.
         
@@ -120,8 +120,8 @@ def register_contact_resources(mcp: MCPServer, usecase: ContactUseCase):
         """
         return await usecase.get_all_contacts()
 
-    @mcp.resource("contact://{id}/delete")
-    async def delete(id: int) -> Result[bool, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("contact://delete/{id}")
+    async def delete(id: int) -> Result[bool, Exception]:
         """
         Delete a contact.
         
@@ -139,8 +139,8 @@ def register_contact_resources(mcp: MCPServer, usecase: ContactUseCase):
         """
         return await usecase.delete_contact(id)
 
-    @mcp.resource("contact://{id}")
-    async def update(id: int, dto: UpdateContactDto) -> Result[ResContactDto, Exception]:  # type: ignore[reportUnusedFunction]
+    @mcp.resource("contact://update/{id}")
+    async def update(id: int, dto: UpdateContactDto) -> Result[ResContactDto, Exception]:
         """
         Update a contact.
         

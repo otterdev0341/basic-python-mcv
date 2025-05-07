@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: self-bank-mysql
+    ports:
+      - "3306:3306"  # Map container port 3306 to host port 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=self_bank
+    volumes:
+      - mysql_data:/var/lib/mysql:delegated
+      - ../mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ../mysql/init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - self-bank-network
+
+  librechat:
+    image: ghcr.io/danny-avila/librechat:latest
+    container_name: self-bank-librechat
+    user: "node"  # Run as node user
+    ports:
+      - "3000:3000"  # Web interface
+      - "3080:3080"  # API endpoint
+    environment:
+      - DOMAIN_CLIENT=http://localhost:3000
+      - DOMAIN_SERVER=http://localhost:3080
+      - MONGO_URI=mongodb://mongodb:27017/librechat
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODELS=llama2
+      - CUSTOM_ENDPOINTS=[{"name":"Self Bank MCP","baseURL":"http://host.docker.internal:8000","apiKey":"","models":[{"name":"self-bank-mcp","model":"self-bank-mcp"}]}]
+    command: >
+      sh -c "cd /app &&
+             npm install &&
+             npm run backend"
+    depends_on:
+      - mongodb
+      - ollama
+    networks:
+      - self-bank-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: self-bank-mongodb
+    ports:
+      - "27018:27017"  # Map container port 27017 to host port 27018
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - self-bank-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: self-bank-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama:delegated
+    command: >
+      sh -c "ollama serve & 
+             sleep 10 && 
+             ollama pull llama2 && 
+             wait"
+    networks:
+      - self-bank-network
+
+volumes:
+  mysql_data:
+    name: self-bank-mysql-data
+  mongodb_data:
+    name: self-bank-mongodb-data
+  ollama_data:
+    name: self-bank-ollama-data
+
+networks:
+  self-bank-network:
+    name: self-bank-network 
